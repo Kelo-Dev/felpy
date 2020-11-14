@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import React, {createContext, ReactNode} from 'react';
 
 import mainReducer from '../reducer/main'
 
@@ -7,13 +7,14 @@ import mainReducer from '../reducer/main'
  */
 export const initialState = {}
 
-export const MainStore = createContext()
 
-export default function MainProvider({ children }) {
-  const [state, dispatch] = React.useReducer(mainReducer, initialState)
-  return (
-    <MainStore.Provider value={{ state, dispatch }}>
-      {children}
-    </MainStore.Provider>
-  )
+export const MainStore = createContext(initialState);
+
+interface IProps {
+  children: ReactNode
+}
+
+export default function MainProvider({ children }: IProps) {
+  const [state, dispatch] = React.useReducer(mainReducer, initialState);
+  return <MainStore.Provider value={{ state, dispatch }}>{children}</MainStore.Provider>;
 }
